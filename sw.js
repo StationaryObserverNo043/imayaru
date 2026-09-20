@@ -1,22 +1,22 @@
 /* イマヤル Service Worker
    ファイルを更新したら CACHE のバージョン番号を上げてください（v1 → v2 ...） */
-const CACHE = 'imayaru-v24';
+const CACHE = 'imayaru-v25';
 const PRECACHE = [
   './',
   './index.html',
   './manifest.webmanifest',
   './favicon.ico',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/maskable-192.png',
-  './icons/maskable-512.png',
-  './icons/apple-touch-icon.png',
-  './icons/favicon-32.png',
-  './icons/favicon-16.png',
-  './assets/img/title.webp',
-  './assets/img/ghost.webp',
-  './assets/img/story.webp',
-  './assets/img/story-1.webp'
+  './icon-192.png',
+  './icon-512.png',
+  './maskable-192.png',
+  './maskable-512.png',
+  './apple-touch-icon.png',
+  './favicon-32.png',
+  './favicon-16.png',
+  './title.webp',
+  './ghost.webp',
+  './story.webp',
+  './story-1.webp'
 ];
 
 self.addEventListener('install', (e) => {

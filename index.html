@@ -17,19 +17,19 @@
 
 <!-- アイコン -->
 <link rel="icon" href="favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
 <!-- SNS / LINE 共有カード
      ★ OGP画像とURLは絶対URLが必須です。公開後のURLに書き換えてください。
-       例) https://YOUR-NAME.github.io/imayaru/ -->
+       例) https://stationaryobserverno043.github.io/imayaru/ -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="イマヤル">
 <meta property="og:title" content="イマヤル｜タスク完了アプリ">
 <meta property="og:description" content="やることを決めて、タイマーをスタート。画面が真っ暗になり、終わるまで止められない。だから、ちゃんとやれる。">
-<meta property="og:url" content="https://YOUR-NAME.github.io/imayaru/">
-<meta property="og:image" content="https://YOUR-NAME.github.io/imayaru/assets/img/ogp.png">
+<meta property="og:url" content="https://stationaryobserverno043.github.io/imayaru/">
+<meta property="og:image" content="https://stationaryobserverno043.github.io/imayaru/ogp.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="タスク完了アプリ イマヤル。オバケのイマヤルがスマホを持っている">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="イマヤル｜タスク完了アプリ">
 <meta name="twitter:description" content="やることを決めて、タイマーをスタート。だから、ちゃんとやれる。">
-<meta name="twitter:image" content="https://YOUR-NAME.github.io/imayaru/assets/img/ogp.png">
+<meta name="twitter:image" content="https://stationaryobserverno043.github.io/imayaru/ogp.png">
 
 <style>
   :root {
@@ -221,7 +221,7 @@
 
 <!-- ========== タイトル画面 ========== -->
 <section id="title" class="screen" aria-label="タイトル">
-  <div class="hero"><img src="assets/img/title.webp" width="940" height="1150" alt="タスク完了アプリ イマヤル。スマホを持った一つ目のオバケ"></div>
+  <div class="hero"><img src="title.webp" width="940" height="1150" alt="タスク完了アプリ イマヤル。スマホを持った一つ目のオバケ"></div>
   <nav class="menu wrap" aria-label="メニュー">
     <button class="btn primary block" id="btn-begin" type="button">はじめる</button>
     <div class="row">
@@ -276,7 +276,7 @@
 <!-- ========== タイマー画面：完了 ========== -->
 <section id="done" class="screen ghost-screen" aria-label="完了" hidden>
   <div class="wrap">
-    <img class="ghost" src="assets/img/ghost.webp" width="640" height="640" alt="イマヤル">
+    <img class="ghost" src="ghost.webp" width="640" height="640" alt="イマヤル">
     <p class="say" id="done-say">おつかれさま。</p>
     <p class="task-chip" id="done-task"></p>
     <div class="actions"><button class="btn primary" id="btn-done-back" type="button">もどる</button></div>
@@ -286,7 +286,7 @@
 <!-- ========== 途中終了からの再開（イマヤルが励ます） ========== -->
 <section id="oops" class="screen ghost-screen" aria-label="励まし" hidden>
   <div class="wrap">
-    <img class="ghost" src="assets/img/ghost.webp" width="640" height="640" alt="イマヤル">
+    <img class="ghost" src="ghost.webp" width="640" height="640" alt="イマヤル">
     <p class="say" id="oops-say">また やればいいよ。</p>
     <p class="task-chip" id="oops-task"></p>
     <div class="actions">
@@ -304,7 +304,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>もどる
       </button>
     </div>
-    <img class="story-img" src="assets/img/story-1.webp" width="1200" height="677" alt="夜のふとんの中で、スマホをみている人の手">
+    <img class="story-img" src="story-1.webp" width="1200" height="677" alt="夜のふとんの中で、スマホをみている人の手">
     <article class="story">
       <p>あるところに。</p>
 
@@ -316,7 +316,7 @@
 
       <p>やることは、<br>どんどん あとまわし。</p>
 
-      <img class="story-img" src="assets/img/story.webp" width="1200" height="677" loading="lazy" decoding="async" alt="スマホの画面で、オバケのイマヤルがやさしく光っている">
+      <img class="story-img" src="story.webp" width="1200" height="677" loading="lazy" decoding="async" alt="スマホの画面で、オバケのイマヤルがやさしく光っている">
 
       <p class="turn">あるひ。</p>
 
@@ -342,7 +342,7 @@
 <dialog id="howto" aria-labelledby="howto-title">
   <div class="howto-body">
     <div class="intro">
-      <img src="icons/icon-192.png" width="96" height="96" alt="">
+      <img src="icon-192.png" width="96" height="96" alt="">
       <p class="name">イマヤル</p>
       <p class="serif"><span class="p">やあ。ぼく</span> <span class="p">オバケの『イマヤル』。</span></p>
       <p class="serif"><span class="p">いっしょに、</span><span class="p">いまやることに</span><br><span class="p">しゅうちゅう</span> <span class="p">しよう。</span></p>
@@ -368,7 +368,7 @@
         <span><b><span class="p">バックグラウンド表示や</span><span class="p">通話の受信はOK</span></b><small><span class="p">電話がかかってきたら、</span><span class="p">ふつうに出られます。</span></small></span>
       </li>
       <li>
-        <span class="ico"><img src="assets/img/ghost.webp" alt=""></span>
+        <span class="ico"><img src="ghost.webp" alt=""></span>
         <span><b><span class="p">途中でアプリを</span><span class="p">閉じたら</span></b><small><span class="p">次に開いたとき、</span><span class="p">イマヤルが</span><span class="p">励ましにきます。</span></small></span>
       </li>
     </ul>
