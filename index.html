@@ -187,29 +187,30 @@
     border: 2px solid var(--line); border-radius: 28px;
   }
   dialog#howto::backdrop { background: rgba(0,0,0,.82); }
-  .howto-body { padding: 26px 22px 22px; }
-  .intro { text-align: center; padding: 4px 0 24px; margin-bottom: 22px; border-bottom: 2px solid var(--line); }
-  .intro img { width: 96px; height: 96px; display: block; margin: 0 auto 8px; }
-  .intro .name { margin: 0 0 14px; font-size: 1.35rem; font-weight: 900; }
-  .intro .serif { margin: 0; font-size: 1.05rem; font-weight: 700; line-height: 1.9; }
-  .intro .nb { white-space: nowrap; }
-  .intro .serif + .serif { margin-top: 12px; }
-  .howto-body h2 { margin: 0 0 18px; font-size: 1.5rem; font-weight: 900; width: fit-content;
+  /* 文字ルール：太さは「ふつう500」と「太字700」の2種類だけ／行間は本文1.9・項目1.65・補足1.75 */
+  dialog#howto { font-family: var(--font); font-weight: 500; }
+  .howto-body { padding: 26px 22px 22px; font-size: 1rem; line-height: 1.9; }
+  .howto-body p { margin: 0; }
+  .howto-body .strong { font-weight: 700; }
+  .howto-body .p { display: inline-block; }   /* 文節ごとにまとめて、変なところで折り返さない */
+  .intro { text-align: center; padding: 4px 0 24px; margin-bottom: 26px; border-bottom: 2px solid var(--line); }
+  .intro img { width: 96px; height: 96px; display: block; margin: 0 auto 6px; }
+  .intro .name { font-size: 1.2rem; font-weight: 700; line-height: 1.6; margin-bottom: 8px; }
+  .intro .serif { font-weight: 700; }
+  .intro .serif + .serif { margin-top: 10px; }
+  .howto-body h2 { margin: 0 0 16px; font-size: 1.35rem; font-weight: 700; line-height: 1.5; width: fit-content;
     text-decoration: underline; text-decoration-color: var(--yellow); text-decoration-thickness: .16em; text-underline-offset: .38em; text-decoration-skip-ink: none; }
-  /* 文節ごとにまとめて、変なところで折り返さない */
-  .howto-body .p { display: inline-block; }
-  .privacy { margin: 0 0 22px; font-weight: 700; line-height: 1.85; }
-  .about { margin: 0 0 22px; font-weight: 700; line-height: 1.85; }
-  .about p { margin: 0; }
-  .about p + p { margin-top: 10px; }
-  .howto-body p.lead { margin: 0 0 14px; line-height: 1.85; }
-  ul.points { list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 16px; }
+  .howto-body .about, .howto-body p.lead, .howto-body p.privacy { margin: 0 0 20px; }
+  .about p + p { margin-top: 8px; }
+  ul.points { list-style: none; padding: 0; margin: 0 0 6px; display: grid; gap: 18px; }
   ul.points li { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; }
   ul.points .ico { width: 44px; height: 44px; border-radius: 50%; background: #1b1b1b; display: grid; place-items: center; color: var(--yellow); overflow: hidden; }
   ul.points .ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   ul.points .ico img { width: 100%; height: 100%; object-fit: cover; }
-  ul.points b { display: block; font-weight: 900; }
-  ul.points small { display: block; color: var(--dim); font-size: .88rem; line-height: 1.6; margin-top: 2px; }
+  ul.points b { display: block; font-weight: 700; line-height: 1.65; }
+  ul.points small { display: block; color: var(--dim); font-size: .875rem; line-height: 1.75; margin-top: 2px; }
+  /* 「とじる」は、スクロールしても下に固定 */
+  .howto-foot { position: sticky; bottom: 0; margin: 0 -22px -22px; padding: 26px 22px 22px; background: linear-gradient(to bottom, rgba(13,13,13,0), #0d0d0d 30%); }
 
   @media (prefers-reduced-motion: reduce) {
     .ghost-screen img.ghost { animation: none; }
@@ -349,12 +350,12 @@
       <p class="serif"><span class="p">いっしょに、</span><span class="p">いまやることに</span><br><span class="p">しゅうちゅう</span> <span class="p">しよう。</span></p>
     </div>
     <h2 id="howto-title">使いかた</h2>
-    <div class="about">
+    <div class="about strong">
       <p><span class="p">イマヤルは、</span><br><span class="p">あなたのスマホの</span><span class="p">「つくもがみ」。</span></p>
       <p><span class="p">あなたのタスク完了を</span><span class="p">応援します。</span></p>
     </div>
     <p class="lead"><span class="p">やることを決めて、</span><span class="p">タイマーをスタート。</span><br><span class="p">時間が終わるまで</span><span class="p">止められない――</span><span class="p">だから、</span><span class="p">ちゃんとやれる。</span></p>
-    <p class="privacy"><span class="p">個人情報は、</span><span class="p">収集されません。</span><br><span class="p">これは、</span><span class="p">あなたの物語。</span></p>
+    <p class="privacy strong"><span class="p">個人情報は、</span><span class="p">収集されません。</span><br><span class="p">これは、</span><span class="p">あなたの物語。</span></p>
     <ul class="points">
       <li>
         <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span>
@@ -373,7 +374,7 @@
         <span><b><span class="p">途中でアプリを</span><span class="p">閉じたら</span></b><small><span class="p">次に開いたとき、</span><span class="p">イマヤルが</span><span class="p">励ましにきます。</span></small></span>
       </li>
     </ul>
-    <button class="btn primary block" id="btn-howto-close" type="button">とじる</button>
+    <div class="howto-foot"><button class="btn primary block" id="btn-howto-close" type="button">とじる</button></div>
   </div>
 </dialog>
 
