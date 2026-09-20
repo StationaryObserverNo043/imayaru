@@ -1,6 +1,6 @@
 /* イマヤル Service Worker
    ファイルを更新したら CACHE のバージョン番号を上げてください（v1 → v2 ...） */
-const CACHE = 'imayaru-v25';
+const CACHE = 'imayaru-v26';
 const PRECACHE = [
   './',
   './index.html',
@@ -38,6 +38,21 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(req.url);
   const sameOrigin = url.origin === self.location.origin;
   if (!sameOrigin) return;   // 外部への通信にはいっさい関わらない
+
+  // ページ本体（index.html）はネット優先：更新したらすぐ反映。オフラインのときだけ保存分を使う
+  if (req.mode === 'navigate') {
+    e.respondWith((async () => {
+      const cache = await caches.open(CACHE);
+      try {
+        const res = await fetch(req);
+        if (res && res.ok) cache.put('./index.html', res.clone());
+        return res;
+      } catch {
+        return (await cache.match('./index.html')) || (await cache.match('./')) || new Response('', { status: 504 });
+      }
+    })());
+    return;
+  }
 
   e.respondWith(
     caches.open(CACHE).then(async (cache) => {
