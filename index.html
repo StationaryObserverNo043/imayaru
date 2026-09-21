@@ -162,6 +162,7 @@
   .ghost-screen { align-items: center; justify-content: center; text-align: center; }
   .ghost-screen .wrap { display: grid; gap: 14px; justify-items: center; }
   .ghost-screen img.ghost { width: min(62vw, 300px); height: auto; display: block; animation: arrive .7s ease-out both; }
+  .ghost-screen img.ghost.art { width: min(84vw, 360px); aspect-ratio: 1; object-fit: contain; }   /* 完了画面のイラスト */
   .say { margin: 0; font-size: 1.7rem; font-weight: 900; line-height: 1.5; text-wrap: balance; }
   #oops-say, #done-say { white-space: pre-line; }
   .say.small { font-size: 1.1rem; font-weight: 700; color: var(--dim); }
@@ -278,7 +279,7 @@
 <!-- ========== タイマー画面：完了 ========== -->
 <section id="done" class="screen ghost-screen" aria-label="完了" hidden>
   <div class="wrap">
-    <img class="ghost" src="ghost.webp" width="640" height="640" alt="イマヤル">
+    <img class="ghost art" id="done-img" src="ghost.webp" width="720" height="720" alt="イマヤル">
     <p class="say" id="done-say">おつかれさま。</p>
     <p class="task-chip" id="done-task"></p>
     <div class="actions"><button class="btn primary" id="btn-done-back" type="button">もどる</button></div>
@@ -398,6 +399,25 @@
     'つぎは なにする？'
   ];
   const DONE_KEY = 'imayaru:done:v1';
+
+  // 完了画面のイラスト。months=出る月（なし＝通年）／when=時間帯（day=昼 5:00〜18:59／night=夜 19:00〜翌4:59／meal=食事どき／any=終日）
+  const ART = [
+    { file: 'done-tennis.webp',        id: 'tennis',     when: 'day',   alt: 'キャップをかぶって、テニスラケットを持つイマヤル' },
+    { file: 'done-picnic.webp',        id: 'picnic',     when: 'day',   alt: '麦わら帽子で、お弁当を食べるピクニックのイマヤル' },
+    { file: 'done-drive.webp',         id: 'drive',      when: 'day',   alt: 'くまと一緒に、赤い車でドライブするイマヤル' },
+    { file: 'done-cleaning.webp',      id: 'cleaning',   when: 'day',   alt: 'バンダナをつけて、掃除をするイマヤル' },
+    { file: 'done-bath.webp',          id: 'bath',       when: 'any',   alt: 'お風呂に入って、ゆげの中でくつろぐイマヤル' },
+    { file: 'done-reading.webp',       id: 'reading',    when: 'any',   alt: 'ソファに座って、本を読むイマヤル' },
+    { file: 'done-cooking.webp',       id: 'cooking',    when: 'meal',  alt: 'コックの帽子で、フライパンで料理をするイマヤル' },
+    { file: 'done-sleep.webp',         id: 'sleep',      when: 'night', alt: 'ナイトキャップをかぶって、くまのぬいぐるみを抱くイマヤル' },
+    { file: 'done-telescope.webp',     id: 'telescope',  when: 'night', alt: '天体望遠鏡で、星を見るイマヤル' },
+    { file: 'done-hanami.webp',        id: 'hanami',     when: 'day',   months: [3, 4],       alt: '桜の下で、おにぎりを食べるお花見のイマヤル' },
+    { file: 'done-surf.webp',          id: 'surf',       when: 'day',   months: [7, 8],       alt: 'サングラスをかけて、サーフィンをするイマヤル' },
+    { file: 'done-autumn-leaves.webp', id: 'autumn',     when: 'day',   months: [9, 10, 11],  alt: '紅葉の中で、カメラを持つイマヤル' },
+    { file: 'done-halloween.webp',     id: 'halloween',  when: 'any',   months: [10],         alt: '魔女の帽子で、ハロウィンのお菓子を持つイマヤル' },
+    { file: 'done-snowman.webp',       id: 'snowman',    when: 'day',   months: [12, 1, 2],   alt: '雪だるまと一緒にいるイマヤル' }
+  ];
+  const ART_KEY = 'imayaru:art:v1';
 
   const $ = (s) => document.querySelector(s);
   const screens = { title: $('#title'), story: $('#story'), setup: $('#setup'), running: $('#running'), done: $('#done'), oops: $('#oops') };
@@ -529,6 +549,9 @@
     try { if (document.fullscreenElement) document.exitFullscreen(); } catch {}
     $('#done-task').textContent = t;
     $('#done-say').textContent = pickLine(DONE, DONE_KEY);
+    const art = pickArt();
+    const img = $('#done-img');
+    if (art) { img.src = art.file; img.alt = art.alt; } else { img.src = 'ghost.webp'; img.alt = 'イマヤル'; }
     show('done');
     try { navigator.vibrate?.([220, 120, 220, 120, 420]); } catch {}
   }
@@ -557,6 +580,26 @@
   function releaseScreen() { try { wakeLock?.release(); } catch {} wakeLock = null; }
 
   /* ---------- 途中で終了していたとき：イマヤルが励ます ---------- */
+  const isNight = (h) => h >= 19 || h < 5;
+  const inMealTime = (h) => (h >= 7 && h < 9) || (h >= 11 && h < 12) || (h >= 17 && h < 18);
+  function artAvailable(a, d) {
+    const m = d.getMonth() + 1, h = d.getHours();
+    if (a.months && !a.months.includes(m)) return false;
+    if (a.when === 'day') return !isNight(h);
+    if (a.when === 'night') return isNight(h);
+    if (a.when === 'meal') return inMealTime(h);
+    return true;
+  }
+  // 出せるイラストを全部同じ確率で選ぶ。直前と同じものは続けて出さない
+  function pickArt(d = new Date()) {
+    const cand = ART.filter((a) => artAvailable(a, d));
+    if (!cand.length) return null;
+    const last = store.get(ART_KEY);
+    const pool = cand.length > 1 ? cand.filter((a) => a.id !== last) : cand;
+    const a = pool[Math.floor(Math.random() * pool.length)];
+    store.set(ART_KEY, a.id);
+    return a;
+  }
   function pickLine(list, key) {
     // 直前と同じセリフが続かないようにランダムで選ぶ
     const last = parseInt(store.get(key), 10);

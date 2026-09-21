@@ -1,6 +1,6 @@
 /* イマヤル Service Worker
    ファイルを更新したら CACHE のバージョン番号を上げてください（v1 → v2 ...） */
-const CACHE = 'imayaru-v31';
+const CACHE = 'imayaru-v32';
 const PRECACHE = [
   './',
   './index.html',
@@ -16,7 +16,21 @@ const PRECACHE = [
   './title.webp',
   './ghost.webp',
   './story.webp',
-  './story-1.webp'
+  './story-1.webp',
+  './done-tennis.webp',
+  './done-picnic.webp',
+  './done-drive.webp',
+  './done-cleaning.webp',
+  './done-bath.webp',
+  './done-reading.webp',
+  './done-cooking.webp',
+  './done-sleep.webp',
+  './done-telescope.webp',
+  './done-hanami.webp',
+  './done-surf.webp',
+  './done-autumn-leaves.webp',
+  './done-halloween.webp',
+  './done-snowman.webp'
 ];
 
 self.addEventListener('install', (e) => {
