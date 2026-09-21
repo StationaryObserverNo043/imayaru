@@ -405,7 +405,6 @@
   let session = null;      // 進行中のセッション
   let timerId = null;
   let wakeLock = null;
-  let audioCtx = null;
 
   /* ---------- ストレージ（失敗しても動く） ---------- */
   const store = {
@@ -477,7 +476,6 @@
 
   /* ---------- 開始 ---------- */
   function begin(task, minutes) {
-    unlockAudio();
     const now = Date.now();
     session = { task, minutes, startedAt: now, endAt: now + minutes * 60000 };
     saveSession();
@@ -532,7 +530,6 @@
     $('#done-task').textContent = t;
     $('#done-say').textContent = pickLine(DONE, DONE_KEY);
     show('done');
-    chime();
     try { navigator.vibrate?.([220, 120, 220, 120, 420]); } catch {}
   }
 
@@ -558,32 +555,6 @@
     } catch {}
   }
   function releaseScreen() { try { wakeLock?.release(); } catch {} wakeLock = null; }
-
-  /* ---------- 終了音 ---------- */
-  function unlockAudio() {
-    try {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      audioCtx = audioCtx || new AC();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-    } catch {}
-  }
-  function chime() {
-    try {
-      if (!audioCtx) return;
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const t0 = audioCtx.currentTime;
-      [[659.25, 0], [880, 0.28], [1318.5, 0.56]].forEach(([f, d]) => {
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-        o.type = 'sine'; o.frequency.value = f;
-        g.gain.setValueAtTime(0, t0 + d);
-        g.gain.linearRampToValueAtTime(0.22, t0 + d + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 1.1);
-        o.connect(g).connect(audioCtx.destination);
-        o.start(t0 + d); o.stop(t0 + d + 1.2);
-      });
-    } catch {}
-  }
 
   /* ---------- 途中で終了していたとき：イマヤルが励ます ---------- */
   function pickLine(list, key) {
