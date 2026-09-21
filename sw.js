@@ -1,6 +1,6 @@
 /* イマヤル Service Worker
    ファイルを更新したら CACHE のバージョン番号を上げてください（v1 → v2 ...） */
-const CACHE = 'imayaru-v32';
+const CACHE = 'imayaru-v33';
 const PRECACHE = [
   './',
   './index.html',
